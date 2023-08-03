@@ -1,0 +1,134 @@
+{% extends 'test.html' %}
+
+{% block post %}
+	<div align='center'>
+		<section class="py-2">
+			<div style="padding-top: 20px; padding-bottom: 20px;">
+				<div class='col-6' style="background-image: linear-gradient(180deg, rgba(55, 99, 244, 0.27), rgba(55, 99, 244, 0.27), rgba(250, 250, 250, 0.6)); border-radius: 25px;padding-left: 24px;padding-right: 24px;padding-top: 24px;padding-bottom: 24px;">
+					<div class="row d-flex justify-content-between align-items-center">
+						<div class="col-auto" style="text-align: left;">
+							<a href='/user/{{ blog.user.username }}'>
+								<h3 style="vertical-align: middle;text-align: left; padding-left: 0px;padding-right: 0px;padding-top: 4px;padding-bottom: 4px;width: 100%;height: auto;">
+									<img class="rounded-circle" style="text-align: left;width: 36px;height: 36px;"
+										src="/user-photo/{{ blog.auth_id }}"
+										/>
+									{{ blog.user.username }}
+								</h3>
+							</a>
+						</div>
+						{% if current_user.user_id == blog.user.user_id %}
+							<div class="col-auto" style="text-align: right;">
+								<div class="dropdown show">
+									<button class="btn dropdown" aria-expanded="true" data-bs-toggle="dropdown" type="button" style='height: 40px; width: 40px; padding-top: 2px; padding-bottom: 2px; padding-left: 16px; padding-right: 16px; font-size: 110%;'>
+										<i class="fa-solid fa-ellipsis-vertical"></i>
+									</button>
+									<div class="dropdown-menu dropdown-menu-center" style='text-align:center'>
+										<a class="dropdown-item" href="/edit-blog/{{ blog.blog_id }}">
+											edit
+										</a>
+										<a class="dropdown-item" href="/delete-blog/{{ blog.blog_id }}">
+											delete
+										</a>
+									</div>
+								</div>
+							</div>
+						{% endif %}
+					</div>
+					<img class="img-fluid d-xxl-flex justify-content-xxl-center align-items-xxl-center" style="text-align: center; border-radius: 10px;border-style: none; width: 100%;padding-left: 0px;padding-right: 0px;padding-top: 0px;padding-bottom: 0px;margin-top: 20px;margin-bottom: 20px;"
+						src="/blog-photo/{{ blog.blog_id }}"
+						>
+					<h4 style="margin-bottom: 0px;margin-top: -10px;">
+						{{ blog.blog_title }}
+					</h4>
+					<p style="padding-top: 0px;padding-bottom: 0px;text-align: justify;margin-top: 4px;margin-bottom: 0px;">
+						{{ blog.blog_caption }}
+					</p>
+					<div class="row d-flex justify-content-between align-items-center style="margin-bottom: 0px;margin-top: 16px;">
+						<div class="col-auto" style="width: 25%; text-align: left;">
+							<div class="col-auto" style='margin-top: 10px;margin-bottom: 16px;'>
+								<a href='/add-like/{{ blog.blog_id }}'>
+									<button class="btn btn-outline-danger btn-sm" type="submit" style="margin-top: 0px;margin-bottom: 0px;padding-left: 12px;padding-right: 12px;background: rgb(255,255,255);padding-top: 2px;padding-bottom: 2px;">
+										<i class="fa-solid fa-heart"></i>
+										<span>
+											{{ blog.blog_like | length }}
+										</span>
+									</button>
+								</a>
+								&nbsp;
+								<a>
+									<button class="btn btn-outline-dark btn-sm" data-bs-toggle='collapse' href='#comment' style="color: black; margin-top: 0px;margin-bottom: 0px;padding-left: 12px;padding-right: 12px;background: rgb(255,255,255);padding-top: 2px;padding-bottom: 2px;">
+										<i class="fa-solid fa-comment"></i>
+										<span>
+											{{ blog.blog_comment | length }}
+										</span>
+									</button>
+								</a>
+								
+							</div>
+						</div>
+						<div class="col" style="text-align: right; width: 40%;">
+							<button class="btn btn-outline-warning btn-sm" type="button" style="cursor: default; margin-top: 0px;margin-bottom: 0px;padding-left: 12px;padding-right: 12px;background: rgb(255,255,255);color: rgb(0,183,121);padding-top: 2px;padding-bottom: 2px;">
+								<span>
+									{{ blog.timestamp }}
+								</span>
+							</button>
+						</div>
+						<div class='collapse' name='comment' id='comment'>
+							<form method='POST' action='/add-comment/{{ blog.blog_id }}' class="row d-flex justify-content-between align-items-center">
+								<div class="col-10 mb-2" style='margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px;'>
+									<input class="form-control" type="text" name="comment"
+										style='border-radius: 50px;width: 100%; margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px;'
+										placeholder="Write your comments here...">
+								</div>
+								<div class='col-2' style='margin-top: 0px; margin-bottom: 8px; margin-left: 0px; margin-right: 0px;'>
+									<button class="btn btn-outline-dark" type='submit'  style='padding-top: 5px; padding-bottom: 5px; padding-left: 12px; padding-right: 14px; margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px;'>
+										<i class="fa-solid fa-paper-plane"></i>
+										<small>
+											comment
+										</small>
+									</button>
+								</div>
+							</form>
+							{% if blog.blog_comment | length > 0 %}
+								{% for comment in blog.blog_comment | reverse %}
+									<div class="row d-flex justify-content-between align-items-center">
+										<div class="col-auto" style="text-align: left;">
+											<a href='/user/{{ comment.user.username }}'>
+												<h6 style="vertical-align: middle;text-align: left; padding-left: 0px;padding-right: 0px;padding-top: 4px;padding-bottom: 4px;width: 100%;height: auto;">
+													<img class="rounded-circle" style="text-align: left;width: 20px;height: 20px;"
+														src="/user-photo/{{ comment.user.user_id }}"
+														/>
+														{{ comment.user.username }}
+												</h6>
+											</a>
+										</div>
+										<div class="col-auto" style="text-align: right;">
+										{% if current_user.user_id == comment.user.user_id %}
+											<div class="dropdown show">
+												<button class="btn dropdown" aria-expanded="true" data-bs-toggle="dropdown" type="button" style='height: 40px; width: 40px; padding-top: 2px; padding-bottom: 2px; padding-left: 16px; padding-right: 16px; font-size: 110%;'>
+													<i class="fa-solid fa-ellipsis-vertical"></i>
+												</button>
+												<div class="dropdown-menu dropdown-menu-center" style='text-align:center'>
+													<a class="dropdown-item" href="/delete-comment/{{ comment.comment_id }}">
+														delete
+													</a>
+												</div>
+											</div>
+										{% endif %}
+										</div>
+									</div>
+										<p style="padding-top: 0px;padding-bottom: 0px; text-align: justify; margin-top: 0px; margin-bottom: 0px;">
+											{{ comment.comment }}
+										</p>
+									<br>
+								{% endfor %}
+							{% else %}
+								<h5>No comments yet!</h5>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+{% endblock %}

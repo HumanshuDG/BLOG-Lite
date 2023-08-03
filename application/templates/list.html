@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+	Blog Lite - Search
+{% endblock %}
+
+{% block search %}
+	active
+{% endblock %}
+
+{% block blog %}
+	<div class="container py-5" style="width: 60%;">
+		{% for user in users %}
+			{% if current_user.user_id != user.user_id %}
+				<a
+					href='/user/{{ user.username }}'
+					>
+					<div class="container pe-xl-0 ps-xl-0 mb-1">
+						<h1 class="fw-bold text-center ps-0 pb-0 mb-0 ps-md-0 pe-lg-0" style="font-size: 40px;text-align: center;">
+							<img class="rounded-circle" style="width: 16%;height: 16%;padding: 10px;"
+								src="/user-photo/{{ user.user_id }}"
+								>
+							<br>
+						</h1>
+						<h1 class="fw-bold text-center ps-0 pb-0 mb-0 ps-md-0 pe-lg-0" style="font-size: 40px;text-align: center;">
+							<span style="background: -webkit-linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+								{{ user.username }}
+							</span>
+							<br>
+						</h1>
+					</div>
+				</a>
+				<br>
+			{% endif %}
+		{% endfor %}
+	</div>
+{% endblock %}

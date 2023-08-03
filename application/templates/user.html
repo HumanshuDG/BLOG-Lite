@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}
+	Blog Lite - User
+{% endblock %}
+
+{% block search %}
+	active
+{% endblock %}
+
+{% block blog %}
+	<section class="container py-5">
+	    <div class="container pe-xl-0 ps-xl-0">
+	        <h1 class="fw-bold text-center ps-0 pb-0 mb-0 ps-md-0 pe-lg-0" style="font-size: 40px;text-align: center;">
+				<img class="rounded-circle" style="width: 16%;height: 16%;padding: 10px;"
+					src="/user-photo/{{ user.user_id }}"
+					>
+				<br>
+			</h1>
+	        <h1 class="fw-bold text-center ps-0 pb-0 mb-0 ps-md-0 pe-lg-0" style="font-size: 40px;text-align: center;">
+				<span style="background: -webkit-linear-gradient(45deg, rgba(64,93,230, 1), rgba(88,81,219, 1), rgba(131,58,180, 1), rgba(193,53,132, 1), rgba(225,48,108, 1), rgba(253,29,29, 1)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+					{{ user.username }}
+				</span>
+			</h1>
+			<br>
+			<blockquote class="blockquote text-center" style='color: auto; max-width: 60%; border-radius: 25px; padding: 24px; text-shadow: #ffffff 1px 0px 20px;'>
+				<i>
+					{{ user.bio }}
+				</i>
+			</blockquote>
+				<h1 class="fw-bold text-center ps-0 pb-0 mb-0 ps-md-0 pe-lg-0" style="font-size: 40px;text-align: center;">
+					<a
+						href='/follow-user/{{ user.username }}'
+						>
+						<button class="btn btn-info fs-6 fw-light text-center border-0 align-items-center align-content-center align-self-center m-auto pt-xl-1 pb-xl-1 pe-xl-2 ps-xl-2 pt-1 mt-0 pb-0 mb-0 me-0 pe-md-1 pb-md-0 mb-md-0" type="button" style="height: 40px;width: 120px;font-size: 1px;padding: 0px 0px;text-align: center;">
+							<b>
+								Follow
+							</b>
+						</button>
+					</a>
+					&nbsp;
+					<a
+						href='/unfollow-user/{{ user.username }}'
+						>
+						<button class="btn btn-info fs-6 fw-light text-center border-0 align-items-center align-content-center align-self-center m-auto pt-xl-1 pb-xl-1 pe-xl-2 ps-xl-2 pt-1 mt-0 pb-0 mb-0 me-0 pe-md-1 pb-md-0 mb-md-0" type="button" style="height: 40px;width: 120px;font-size: 1px;padding: 0px 0px;text-align: center;">
+							<b>
+								Unfollow
+							</b>
+						</button>
+					</a>
+				</h1>
+			<h1 class="fw-bold text-center ps-0 pb-0 mb-0 ps-md-0 pe-lg-0" style="font-size: 40px;text-align: center;">
+				<br>
+			</h1>
+	    </div>
+	    <div class="container text-center" style="width: 60%;font-size: 110%;">
+	        <div class="row" style="font-size: 110%;">
+	            <div class="col-md-4" style="font-size: 110%;">
+	                <h3 style="text-align: center;font-size: 110%;">
+						{{ user.blogs | length }}
+					</h3>
+	                <h3 style="text-align: center;font-size: 110%;">
+						Posts
+					</h3>
+	            </div>
+	            <div class="col-md-4" style="font-size: 110%;">
+	                <h3 style="text-align: center;font-size: 110%;">
+						<a href='./{{ user.username }}/followers'>
+							{{ user.followers | length }}
+						</a>
+					</h3>
+	                <h3 style="text-align: center;font-size: 110%;">
+						Followers
+					</h3>
+	            </div>
+	            <div class="col-md-4" style="font-size: 110%;">
+	                <h3 style="text-align: center;font-size: 110%;">
+						<a href='./{{ user.username }}/following'>
+							{{ user.followers | length }}
+						</a>
+					</h3>
+	                <h3 style="text-align: center;font-size: 110%;">
+						Following
+					</h3>
+	            </div>
+	        </div>
+	    </div>
+	    <h1 class="fw-bold text-center ps-0 pb-0 mb-0 ps-md-0 pe-lg-0" style="font-size: 40px;text-align: center;">
+			<br>
+		</h1>
+	    <div>
+	        <div class="container text-center py-4 px-xl-5 my-xl-0 py-xl-0" style="width: 75%; text-align: center; height: auto;">
+				{% if user.blogs %}
+					{% for blog in user.blogs | reverse %}
+						<a
+							href='/blog/{{ blog.blog_id }}'
+							>
+							<img style="width: 30%; max-height: 20%;"
+								src='/blog-photo/{{ blog.blog_id }}'
+								>
+						</a>
+					{% endfor %}
+				{% else %}
+					<br>
+					<h2>No blogs published yet!</h2>
+				{% endif %}
+			</div>
+	    </div>
+	</section>
+{% endblock blog %}

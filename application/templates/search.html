@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}
+	Blog Lite - Search
+{% endblock %}
+
+{% block search %}
+	active
+{% endblock %}
+
+{% block blog %}
+	<form action='/search-user' method='POST' class="container py-5" style="width: 60%; font-size: 110%;">
+		<input name='query' type="search" style='text-align: center' id="form1" class="form-control" placeholder="Search users" aria-label="Search" />
+		<br>
+		<button class="btn btn-info fs-6 fw-light text-center border-0 align-items-center align-content-center align-self-center m-auto pt-xl-1 pb-xl-1 pe-xl-2 ps-xl-2 pt-1 mt-0 pb-0 mb-0 me-0 pe-md-1 pb-md-0 mb-md-0" type="submit" style="height: 40px;width: 120px;font-size: 1px;padding: 0px 0px;text-align: center;">
+			<i class="fa-solid fa-magnifying-glass"></i>
+		</button>
+	</form>
+{% endblock %}
